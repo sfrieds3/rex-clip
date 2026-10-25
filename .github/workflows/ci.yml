@@ -27,7 +27,7 @@ jobs:
         with:
           args: lua test
 
-  # release-please builds the changelog from commit messages, and PRs are squash-merged with the
+  # Releases are versioned from commit messages, and PRs are squash-merged with the
   # PR title as the commit message, so titles must be conventional commits.
   pr-title:
     if: github.event_name == 'pull_request'
