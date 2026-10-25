@@ -10,6 +10,8 @@
 
 local M = {}
 
+M.version = "0.0.0" -- x-release-please-version
+
 M.options = {
   -- Shrink images whose long edge is bigger than this. Agents downscale anyway. false keeps the original.
   max_dimension = 2000,
@@ -125,7 +127,9 @@ end
 local function prepare(src, base, ext)
   local argv = { "sips" }
   if output_ext(ext) ~= ext then
-    for _, a in ipairs({ "-s", "format", "png" }) do argv[#argv + 1] = a end
+    for _, a in ipairs({ "-s", "format", "png" }) do
+      argv[#argv + 1] = a
+    end
   end
   local limit = M.options.max_dimension
   if limit and ext ~= "gif" and ext ~= "webp" then
@@ -139,7 +143,9 @@ local function prepare(src, base, ext)
   end
   if #argv == 1 then return src end
   local out = base .. "-ready." .. output_ext(ext)
-  for _, a in ipairs({ src, "--out", out }) do argv[#argv + 1] = a end
+  for _, a in ipairs({ src, "--out", out }) do
+    argv[#argv + 1] = a
+  end
   exec(argv, { timeout = 10 })
   return out
 end
@@ -270,7 +276,9 @@ function M.setup(opts)
     title = "Paste Clipboard Image as a File Path",
     description = "Paste the clipboard's image as a file path. For a pane on another server, the image is copied there first.",
     keywords = "clipboard image screenshot paste upload remote agent",
-    run = function(ctx) return M.paste(ctx) end,
+    run = function(ctx)
+      return M.paste(ctx)
+    end,
   })
   return M
 end

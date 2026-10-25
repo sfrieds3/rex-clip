@@ -36,8 +36,15 @@ local function seed(kind, value)
 end
 
 local png = (os.getenv("TMPDIR") or "/tmp"):gsub("/*$", "") .. "/rex-clip-test.png"
-rex.exec({ "sips", "-s", "format", "png",
-  "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns", "--out", png })
+rex.exec({
+  "sips",
+  "-s",
+  "format",
+  "png",
+  "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns",
+  "--out",
+  png,
+})
 
 local host = rex.args.host
 local api, session_id = rex, rex.session_id
@@ -57,7 +64,10 @@ rex.sleep(0.5)
 
 local function screen()
   local s = api.call("block.method", {
-    session_id = session_id, block_id = target, method = "format", args = { trim = true, unwrap = true },
+    session_id = session_id,
+    block_id = target,
+    method = "format",
+    args = { trim = true, unwrap = true },
   })
   return s and s.content or ""
 end
@@ -69,8 +79,15 @@ local function paste(label)
   if result.path then
     check(screen():find("^[[200~" .. result.path .. "^[[201~", 1, true), label .. ": pane shows " .. screen())
   end
-  rex.log(string.format("%s: %s %s%s", label, result.pasted, tostring(result.path),
-    result.cached and " (already there)" or ""))
+  rex.log(
+    string.format(
+      "%s: %s %s%s",
+      label,
+      result.pasted,
+      tostring(result.path),
+      result.cached and " (already there)" or ""
+    )
+  )
   return result
 end
 
@@ -88,13 +105,17 @@ check(text and text.pasted == "nothing", "text was pasted")
 if not host then
   local sum = rex.exec({ "shasum", "-a", "256", png }).stdout:match("^(%x+)")
   local name = "e2e-" .. os.time() .. ".png"
-  local ok, path, had = pcall(M.upload, rex, session_id, name, function() return png, sum end)
+  local ok, path, had = pcall(M.upload, rex, session_id, name, function()
+    return png, sum
+  end)
   if check(ok, "upload: " .. tostring(path)) then
     check(not had, "upload: fresh name reported as already there")
     local copied = rex.exec({ "shasum", "-a", "256", path }).stdout:match("^(%x+)")
     check(copied == sum, "upload: copy differs from the original")
     rex.log("upload: " .. path)
-    local ok2, path2, had2 = pcall(M.upload, rex, session_id, name, function() error("should not resend") end)
+    local ok2, path2, had2 = pcall(M.upload, rex, session_id, name, function()
+      error("should not resend")
+    end)
     check(ok2 and had2 and path2 == path, "upload again: " .. tostring(path2))
     os.remove(path)
   end

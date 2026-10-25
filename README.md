@@ -53,6 +53,19 @@ rex do test/e2e.lua host=LABEL    # a pane on the Rex host LABEL
 
 The test uses a private pasteboard, so your clipboard is untouched.
 
+## Development
+
+CI checks formatting with [StyLua](https://github.com/JohnnyMorganz/StyLua) and lints with [luacheck](https://github.com/lunarmodules/luacheck):
+
+```sh
+stylua lua test
+luacheck lua test
+```
+
+The end-to-end test needs Rex on a Mac, so CI doesn't run it.
+
+Releases are cut by [release-please](https://github.com/googleapis/release-please). Commit messages and PR titles follow [Conventional Commits](https://www.conventionalcommits.org): `fix:` makes a patch release, `feat:` a minor one, and `feat!:` or a `BREAKING CHANGE:` footer a major one (minor while the version is below 1.0). Each push to `main` updates a release PR with the next version and changelog; merging it tags `vX.Y.Z`, publishes a GitHub release, and bumps `M.version` in `lua/rex_clip.lua`.
+
 ## Limits
 
 - Large images are slow over high-latency links, since each write is one request.
