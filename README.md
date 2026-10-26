@@ -64,7 +64,7 @@ luacheck lua test
 
 The end-to-end test needs Rex on a Mac, so CI doesn't run it.
 
-Releases are cut by [release-please](https://github.com/googleapis/release-please). Commit messages and PR titles follow [Conventional Commits](https://www.conventionalcommits.org): `fix:` makes a patch release, `feat:` a minor one, and `feat!:` or a `BREAKING CHANGE:` footer a major one (minor while the version is below 1.0). Each push to `main` updates a release PR with the next version and changelog; merging it tags `vX.Y.Z`, publishes a GitHub release, and bumps `M.version` in `lua/rex_clip.lua`.
+Each push to `main` tags a release and publishes a GitHub release with notes built from the commits since the last one. Commit messages and PR titles follow [Conventional Commits](https://www.conventionalcommits.org): `fix:` makes a patch release, `feat:` a minor one, and `feat!:` or a `BREAKING CHANGE:` footer a major one (minor while the version is below 1.0). Other types, like `docs:` or `ci:`, don't release.
 
 ## Limits
 

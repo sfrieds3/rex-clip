@@ -10,8 +10,6 @@
 
 local M = {}
 
-M.version = "0.0.0" -- x-release-please-version
-
 M.options = {
   -- Shrink images whose long edge is bigger than this. Agents downscale anyway. false keeps the original.
   max_dimension = 2000,
