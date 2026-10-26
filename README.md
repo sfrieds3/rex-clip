@@ -64,7 +64,7 @@ luacheck lua test
 
 The end-to-end test needs Rex on a Mac, so CI doesn't run it.
 
-Each push to `main` tags a release and publishes a GitHub release with notes built from the commits since the last one. Commit messages and PR titles follow [Conventional Commits](https://www.conventionalcommits.org): `fix:` makes a patch release, `feat:` a minor one, and `feat!:` or a `BREAKING CHANGE:` footer a major one. Other types, like `docs:` or `ci:`, don't release.
+Each push to `main` tags a release and publishes a GitHub release with notes built from the commits since the last one. Commit messages and PR titles follow [Conventional Commits](https://www.conventionalcommits.org): `fix:` makes a patch release, `feat:` a minor one, and `feat!:` or a `BREAKING CHANGE:` footer a major one (minor while the version is below 1.0). Other types, like `docs:` or `ci:`, don't release.
 
 ## Limits
 
